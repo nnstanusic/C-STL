@@ -54,3 +54,4 @@ dkms.conf
 #Uset Defined
 .vs
 out
+CMakeSettings.json
