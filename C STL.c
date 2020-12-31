@@ -69,9 +69,8 @@ make_visitor(visitor, Variant,
 
 inline static fill_variant_(Variant* variant) 
 {
-	static int a = 0;
 	Data* data = &variant->From_Data_t;
-	data->a = a++;
+	data->a = 1;
 	data->f = 2.3f;
 	data->text = "Hello World";
 
