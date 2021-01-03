@@ -22,7 +22,7 @@ inline static void print(Data const* data)
 	printf("My complicated struct: %d, %f, %s\n", data->a, data->f, data->text);
 }
 
-void print_float(float* data)
+inline static void print_float(float* data)
 {
 	printf("My simple float %f\n", *data);
 }
@@ -36,46 +36,57 @@ make_visitor(visitor, Variant, visitor_return_t(void),
 (Data_t, print),
 (float_t, print_float));
 
-bool equal_float(float* f) 
+inline static void Square_data(Data* data)
 {
-	return *f == 100.0f;
+	data->a *= data->a;
+	data->f *= data->f;
 }
 
-bool equal_data(Data* data) 
+inline static void Square_float(float* data)
 {
-	return data->a == 1;
+	*data *= *data;
 }
 
-make_visitor(condition_visitor, Variant, visitor_return_t(bool),
-(float_t, equal_float),
-(Data_t, equal_data))
+make_visitor(square_visitor, Variant, void,
+(Data_t, Square_data),
+(float_t, Square_float)
+)
 
 inline static fill_variants_(Variant* variant) 
-{
+{	
+	static int increment = 0;
 	Data* data = &variant->From_Data_t;
-	data->a = 1;
-	data->f = 2.3f;
+	data->a = increment;
+	data->f = 2.3f * increment++;
 	data->text = "Hello World";
 
 	variant->current_type = Data_t;
 }
 
 make_for_each(fill_variants, Variant, fill_variants_);
-make_for_each(print_variant, Variant, visitor);
+make_for_each(print_variants, Variant, visitor);
+make_for_each(square_variants, Variant, square_visitor);
 
-make_all_of(check_all_of, Variant, condition_visitor);
+void newLine(Variant* a, Variant* b)
+{
+	putc('\n', stdout);
+}
+
+algorithm_chain(complexAlgo, Variant, void, 
+	(fill_variants, begin, end),
+	(print_variants, begin, end),
+	(newLine, begin, end),
+	(square_variants, begin, end + 1),
+	(print_variants, begin, end)
+	)
+
 
 int main()
 {
 	Variant variant[5];
-	
-	fill_variants(variant, variant + 5);
-	bool test = check_all_of(variant, variant + 5);
-	variant[3].From_float_t = 5.7f;
-	variant[3].current_type = float_t;
-	bool test2 = check_all_of(variant, variant + 5);
-	print_variant(variant, variant + 5);
 
+	complexAlgo(variant, variant + 5);
+	
 	return 0;
 }
 

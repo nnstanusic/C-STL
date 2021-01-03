@@ -54,7 +54,8 @@ return_t name(variant_t* variant)\
 /**
 *Generates a C STL Variant
 */
-#define make_variant(name, ...)enum name ##_type { \
+#define make_variant(name, ...)\
+enum name ##_type { \
 EXPAND(EXPAND(GET_MACRO(_0, __VA_ARGS__, FE_12,FE_11,FE_10,FE_9,FE_8,FE_7,FE_6,FE_5,FE_4,FE_3,FE_2,FE_1,ERR, ERR))(SET_ENUM, __VA_ARGS__))\
 }; \
 typedef struct\
@@ -66,4 +67,12 @@ EXPAND(EXPAND(GET_MACRO(_0, __VA_ARGS__, FE_12,FE_11,FE_10,FE_9,FE_8,FE_7,FE_6,F
 enum name ## _type current_type;\
 } name;
 
+
+#define algorithm_function(name, begin, end, ...) name(begin, end, __VA_ARGS__);
+
+#define algorithm_chain(name, iter_t, return_t, ...)\
+static inline return_t name(iter_t* begin, iter_t* end)\
+{\
+EXPAND(EXPAND(GET_MACRO(_0, __VA_ARGS__, FE_12,FE_11,FE_10,FE_9,FE_8,FE_7,FE_6,FE_5,FE_4,FE_3,FE_2,FE_1,ERR, ERR))(algorithm_function, __VA_ARGS__)) \
+}
 
