@@ -67,17 +67,33 @@ make_for_each(fill_variants, Variant, fill_variants_);
 make_for_each(print_variants, Variant, visitor);
 make_for_each(square_variants, Variant, square_visitor);
 
+static inline float extract_datafloat(Data const* data) { return data->f; }
+
+static inline float identity(float const* f) { return *f; }
+
+make_visitor(extract_float, Variant, float,
+	(Data_t, extract_datafloat),
+	(float_t, identity));
+
+static inline void addition_visitor(float* f, Variant* var)
+{
+	*f += extract_float(var);
+}
+
+make_accumulate(sum, Variant, float, addition_visitor);
+
 void newLine(Variant* a, Variant* b)
 {
 	putc('\n', stdout);
 }
 
-algorithm_chain(complexAlgo, Variant, void, 
-	(fill_variants, begin, end),
-	(print_variants, begin, end),
-	(newLine, begin, end),
-	(square_variants, begin, end + 1),
-	(print_variants, begin, end)
+algorithm_chain(complexAlgo, Variant, float,
+	(fill_variants),
+	(print_variants),
+	(newLine),
+	(square_variants, begin, begin + 3),
+	(print_variants),
+	(return sum, begin, end, 0.0f)
 	)
 
 
@@ -85,8 +101,9 @@ int main()
 {
 	Variant variant[5];
 
-	complexAlgo(variant, variant + 5);
+	float sum = complexAlgo(variant, variant + 5);
 	
+	printf("Sum of floats %f\n", sum);
 	return 0;
 }
 
