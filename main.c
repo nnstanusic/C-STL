@@ -35,7 +35,7 @@ make_accumulate(sum_of_squares, Event, cash_t, addition_visitor);
 algorithm_chain(complexAlgo, Event, cash_t,
 	(generate_messages),
 	(print_events),
-	(return sum_of_squares, begin, end, 0.0f)
+	(return sum_of_squares, begin, end - 2, 0.0f)
 )
 
 
