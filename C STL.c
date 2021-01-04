@@ -3,9 +3,7 @@
 
 
 #include "C STL.h"
-#include "c_algorithms.h"
-#include "functional.h"
-
+#include <stdio.h>
 
 inline static void print(MessageEvent const* data)
 {

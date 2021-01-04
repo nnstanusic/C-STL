@@ -1,12 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include "c_algorithms.h"
-#include <string.h>
-#include <stdbool.h>
-#include <assert.h>
-#include "functional.h"
-
 #include "C STL.h"
+#include "c_algorithms.h"
 
 
 inline static fill_variants_(Event_v* variant)
