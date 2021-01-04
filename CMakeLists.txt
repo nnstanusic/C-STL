@@ -6,7 +6,7 @@ cmake_minimum_required (VERSION 3.8)
 project ("C STL")
 
 # Add source to this project's executable.
-add_executable (CSTL "C STL.c")
+add_executable (CSTL "C STL.c" "main.c" "C STL.h")
 
 target_include_directories(CSTL PRIVATE "include")
 # TODO: Add tests and install targets if needed.
