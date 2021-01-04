@@ -1,7 +1,7 @@
 # C STL
  A recreatation of the Cpp STL for C
 
- ##Basic concepts: 
+ ## Basic concepts: 
 
  Every macro starting with "make" should be used to generate functions.
  The arguments for the macro should be similiar for every make_"algo":
