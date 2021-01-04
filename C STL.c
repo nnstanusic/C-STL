@@ -16,15 +16,15 @@ inline static void print_float(float* data)
 }
 
 
-make_visitor(PrintEvent, Event_v, visitor_return_t(void),
-	(messageEvent_t, print),
-	(cash_t, print_float));
+make_visitor(PrintEvent, Event, visitor_return_t(void),
+	(message_v, print),
+	(cash_v, print_float));
 
 
 static inline float ShowMoney(MessageEvent const* data) { return data->money; }
 
 static inline float deref_f(float const* f) { return *f; }
 
-make_visitor(CashValue, Event_v, float,
-	(messageEvent_t, ShowMoney),
-	(cash_t, deref_f));
+make_visitor(CashValue, Event, float,
+	(message_v, ShowMoney),
+	(cash_v, deref_f));

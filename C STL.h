@@ -1,19 +1,18 @@
 #include <functional.h>
 
-typedef float cash;
+typedef float cash_t;
 
 typedef struct
 {
 	int priority;
-	cash money;
+	cash_t money;
 	char* text;
 } MessageEvent;
 
+make_variant(Event,
+	(message_v, MessageEvent),
+	(cash_v, cash_t));
 
-make_variant(Event_v,
-	(messageEvent_t, MessageEvent),
-	(cash_t, cash));
+void PrintEvent(Event* event);
 
-void PrintEvent(Event_v* event);
-
-cash CashValue(Event_v* event);
+cash_t CashValue(Event* event);
